@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="./index.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/excellentexport@3.4.3/dist/excellentexport.min.js"></script>
+  <script src="http://requirejs.org/docs/release/2.3.6/minified/require.js"></script>
+<script>
+    require(['dist/excellentexport'], function(ee) {
+        window.ExcellentExport = ee;
+    });
+</script>
+</head>
+<style>
+  #loading,
+  #download-btn-container,
+  #download-btn,
+  #cvc-generator,
+  #mock-ratsit-page {
+    display: none;
+  }
+</style>
+<body>
+
+  <div id="cvc-generator">
+    <table id="datatable">
+  </table>
+  </div>
+
+  <div id="download-btn-container">
+    <a
+      id="download-btn"
+      download="ratsit-business.csv"
+      href="#"
+      onclick="return ExcellentExport.csv(this, 'datatable');">Export to CSV</a>
+  </div>
+
+  <div id="mock-ratsit-page"></div>
+
+  <div>
+    <h2>Ratsit länk</h2>
+    <p>Kopiera över sidan som du vill dra ner företag och adress på och få ut allt i cvc fält som du sedan importerar till excel</p>
+    <p>
+      Ex: https://www.ratsit.se/sok/foretag?vem=&var=huddinge+14102&ab=1&ef=0&hbkb=0&ov=0&typ=1&page=1
+    </p>
+    <input type="text" id="ratsit-link">
+    <button id="cvc-btn">Generera CVC fil</button>
+    <div id="loading">
+      <img src="https://flevix.com/wp-content/uploads/2020/01/Bounce-Bar-Preloader-1.gif" alt="">
+    </div>
+  </div>
+  
+</body>
+</html>
