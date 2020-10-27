@@ -14,21 +14,33 @@ const createCvc = (res) => {
 
 const handleRes = (res) => {
   const ratsitEl = document.querySelector('#mock-ratsit-page')
+  ratsitEl.innerHTML = ''
   ratsitEl.innerHTML = res
   createCvc()
 }
 
-const fetchUrl = (url) => {
-  fetch(`https://cors-anywhere.herokuapp.com/${url}`)
-    .then(res => res.text())
-    .then(data => {
-      handleRes(data)
-    })
+const fetchUrl = async (url) => {
+  const corsProxy = 'https://cors-anywhere.herokuapp.com/'
+  const totalPages = document.querySelector('#total-pages').value ? Number(document.querySelector('#total-pages').value) : 1
+  const allUrls = []
+
+  for (let page = 1; page <= totalPages; page++) {
+    let ratsitUrl = new URL(url)
+    let params = ratsitUrl.searchParams
+    params.set('page', page)
+    ratsitUrl.search = params.toString()
+    allUrls.push(new Promise(resolve => {
+      fetch(`${corsProxy}${ratsitUrl.href}`)
+      .then(res => resolve(res.text()))
+    }))
+  }
+
+  const res = await Promise.all(allUrls)
+  handleRes(res.join('<br />'))
 }
 
 const getLink = () => {
   const cvcBtn = document.querySelector('#cvc-btn')
-  console.log(cvcBtn)
   cvcBtn.addEventListener('click', () => {
     document.querySelector('#loading').style.display = 'block'
     const ratsitUrl = document.querySelector('#ratsit-link').value

@@ -41,12 +41,21 @@
 
   <div>
     <h2>Ratsit länk</h2>
-    <p>Kopiera över sidan som du vill dra ner företag och adress på och få ut allt i cvc fält som du sedan importerar till excel</p>
     <p>
+      1. Ställ in filtret för ratsit.
+    </p>
+    <p>
+      2. Kopiera över sidan som du vill dra ner företag och adress på och få ut allt i cvc fält som du
+      sedan importerar till googles excel
+    </p>
+    <p style="font-style: italic;">
       Ex: https://www.ratsit.se/sok/foretag?vem=&var=huddinge+14102&ab=1&ef=0&hbkb=0&ov=0&typ=1&page=1
     </p>
-    <input type="text" id="ratsit-link">
+    <input placeholder="Ratsit länk" type="text" id="ratsit-link">
     <button id="cvc-btn">Generera CVC fil</button>
+    <div style="margin-top: 10px;">
+      <input id="total-pages" type="number" placeholder="Hur många sidor?">
+    </div>
     <div id="loading">
       <img src="https://flevix.com/wp-content/uploads/2020/01/Bounce-Bar-Preloader-1.gif" alt="">
     </div>
