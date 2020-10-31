@@ -17,14 +17,21 @@ const createCvc = (res) => {
   document.querySelector('#loading').style.display = 'none'
 }
 
+const clearDiv = () => {
+  const ratsitEl = document.querySelector('#mock-ratsit-page')
+  const table = document.querySelector('#datatable')
+  table.innerHTML = ''
+  ratsitEl.innerHTML = ''
+}
+
 const handleRes = (res) => {
   const ratsitEl = document.querySelector('#mock-ratsit-page')
-  ratsitEl.innerHTML = ''
   ratsitEl.innerHTML = res
   createCvc()
 }
 
 const fetchUrl = async (url) => {
+  clearDiv()
   const corsProxy = 'https://cors-anywhere.herokuapp.com/'
   const totalPages = document.querySelector('#total-pages').value ? Number(document.querySelector('#total-pages').value) : 1
   const allUrls = []
