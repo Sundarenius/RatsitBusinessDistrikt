@@ -1,12 +1,17 @@
 const createCvc = (res) => {
   const allHits = document.querySelectorAll('.search-list-name-address')
   const table = document.querySelector('#datatable')
+  const added = []
   allHits.forEach(val => {
-    const tr = document.createElement('tr')
-    const td = document.createElement('td')
-    td.innerText = val.innerText
-    table.appendChild(tr)
-    tr.appendChild(td)
+    const innerText = val.innerText.replace('AB', 'AB, ')
+    if (innerText.includes('AB') && !added.includes(innerText)) {
+      const tr = document.createElement('tr')
+      const td = document.createElement('td')
+      td.innerText = innerText
+      added.push(innerText)
+      table.appendChild(tr)
+      tr.appendChild(td)
+    }
   })
   document.querySelector('#download-btn').click()
   document.querySelector('#loading').style.display = 'none'
@@ -36,7 +41,7 @@ const fetchUrl = async (url) => {
   }
 
   const res = await Promise.all(allUrls)
-  handleRes(res.join('<br />'))
+  handleRes(res.join('<br />'), totalPages)
 }
 
 const getLink = () => {
