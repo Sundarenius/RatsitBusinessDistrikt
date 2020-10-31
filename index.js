@@ -3,8 +3,8 @@ const createCvc = (res) => {
   const table = document.querySelector('#datatable')
   const added = []
   allHits.forEach(val => {
-    const innerText = val.innerText.replace('AB', 'AB, ')
-    if (innerText.includes('AB') && !added.includes(innerText)) {
+    const innerText = val.innerText.replace('AB', 'AB, ').replace('Aktiebolag', 'Aktiebolag, ')
+    if ((innerText.includes('AB') || innerText.includes('Aktiebolag')) && !added.includes(innerText)) {
       const tr = document.createElement('tr')
       const td = document.createElement('td')
       td.innerText = innerText
