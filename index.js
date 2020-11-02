@@ -2,9 +2,10 @@ const createCvc = (res) => {
   const allHits = document.querySelectorAll('.search-list-name-address')
   const table = document.querySelector('#datatable')
   const added = []
+  const includes = (innerText.includes('AB') || innerText.includes('Aktiebolag') || innerText.includes('aktiebolag'))
   allHits.forEach(val => {
     const innerText = val.innerText.replace('AB', 'AB, ').replace('Aktiebolag', 'Aktiebolag, ')
-    if ((innerText.includes('AB') || innerText.includes('Aktiebolag')) && !added.includes(innerText)) {
+    if (includes && !added.includes(innerText)) {
       const tr = document.createElement('tr')
       const td = document.createElement('td')
       td.innerText = innerText
