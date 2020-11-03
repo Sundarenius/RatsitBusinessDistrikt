@@ -28,22 +28,33 @@ function download_table_as_csv(table_id, separator = ',') {
   document.body.removeChild(link);
 }
 
-const createCvc = (res) => {
+const includesOrt = (text) => {
+  let ratsitUrl = new URL(location.href)
+  let params = ratsitUrl.searchParams
+  let ort = params.get('var').split(' ')[0]
+  return text.toLowerCase().includes(ort.toLowerCase())
+}
+
+const createCvc = () => {
   const allHits = document.querySelectorAll('.search-list-name-address')
   const table = document.querySelector('#datatable')
+  const omitNextLineChar = (str) => str.split(String.fromCharCode(10)).join('')
   const added = []
   allHits.forEach(val => {
-    const innerText = val.innerText.replace('AB', 'AB, ').replace('Aktiebolag', 'Aktiebolag, ')
+    const innerText = omitNextLineChar(val.innerText).replace('AB', 'AB, ').replace('Aktiebolag', 'Aktiebolag, ')
+    const compare = innerText.replace(/↵/g, '').replace(/ /g, '').toLowerCase()
     const includes = (innerText.includes('AB') || innerText.includes('Aktiebolag') || innerText.includes('aktiebolag'))
-    if (includes && !added.includes(innerText)) {
+    const ort = includesOrt(compare)
+    if (ort && includes && !added.includes(compare)) {
       const tr = document.createElement('tr')
       const td = document.createElement('td')
       td.innerText = innerText
-      added.push(innerText)
+      added.push(compare)
       table.appendChild(tr)
       tr.appendChild(td)
     }
   })
+  console.log(added)
   download_table_as_csv('datatable')
 }
 
@@ -93,11 +104,3 @@ const _GE_MIG_ALLT_ = (url, totalPages) => {
   createElements()
   fetchUrl(url, totalPages)
 }
-
-console.log('TJAAAA')
-console.log('Okej, detta är superhackigt men ska funka!! :)')
-console.log('Gör så här:')
-console.log("Skriv in _GE_MIG_ALLT_('url', antalSidor) här i konsolen")
-console.log("Exempel: _GE_MIG_ALLT_('https://www.ratsit.se/sok/foretag?vem=&var=huddinge+14102&ab=1&ef=0&hbkb=0&ov=0&typ=1&page=1', antalSidor)")
-console.log('Urlen i första argumentet är själva urlen men innanför apostrofer, andra argument är anta sidor, ett nummer bara utan atostrofer')
-console.log('För att rensa denna konsol, tryck "cmd+k" på din macs tangentbort')
